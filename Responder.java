@@ -1,17 +1,31 @@
+import java.util.Random;
+import java.util.ArrayList;
+
 /**
  * The responder class represents a response generator object.
  * It is used to generate an automatic response to an input string.
  * 
- * @author     Michael Kölling and David J. Barnes
- * @version    0.1 (2011.07.31)
+ * @author     Carlos Alvarez
+ * @version    15/03/2018
  */
 public class Responder
 {
+    Random nAleatorio;
+    ArrayList<String> resp;
+        
     /**
      * Construct a Responder - nothing to do
      */
+    
     public Responder()
-    {
+    {   
+        nAleatorio = new Random();
+        resp = new ArrayList<String>();
+        resp.add ("Muy interesante");
+        resp.add ("No lo entiendo");
+        resp.add ("Alguna duda mas?");
+        resp.add ("Lo siento, no puedo ayudarle");
+        resp.add ("Buena idea");
     }
 
     /**
@@ -20,6 +34,7 @@ public class Responder
      */
     public String generateResponse()
     {
-        return "That sounds interesting. Tell me more...";
+        int num = nAleatorio.nextInt(6);
+        return resp.get(num);
     }
 }
