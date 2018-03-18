@@ -15,7 +15,7 @@ public class Responder
 {
     Random nAleatorio;
     ArrayList<String> resp;
-    HashMap<String, String> respMap;
+    private HashMap<HashSet<String>, String> respMap;
 
     /**
      * Construct a Responder - nothing to do
@@ -24,14 +24,10 @@ public class Responder
     public Responder()
     {   
         nAleatorio = new Random();
-        resp = new ArrayList<String>();
-        resp.add ("Explicamelo de nuevo");
-        resp.add ("Como hago eso?");
-        resp.add ("Lo siento!");
-        resp.add ("Genial");
 
-        respMap = new HashMap<String, String>();
-        fillRespMap();
+        respMap = new HashMap<>();
+        DefaultResponses();
+
     }
 
     /**
@@ -39,34 +35,40 @@ public class Responder
      */
     public void fillRespMap()
     {
-        respMap.put("lento","Algo no funciona como debiera");
-        respMap.put("error","Se ha detectado un error, no se preocupe estamos trabajando en ello");
-        respMap.put("problema","Ese problema es muy facil de solucionar, reinicie su equipo");
-        respMap.put("Sonido","Su tarjeta de sonido ha quedado obsoleta, se recomienda cambiarla");
+        HashSet<String> set01 = new HashSet<>();
+        set01.add("free");
+        set01.add("app");
+
+        HashSet<String> set02 = new HashSet<>();
+        set02.add("free");
+
+        HashSet<String> set03 = new HashSet<>();
+        set03.add("app");
+
+        HashSet<String> set04 = new HashSet<>();
+        set04.add("problema");
+        set04.add("error");
+        set04.add("lento");
+
+        respMap.put(set04,"Se ha detectado un error, no se preocupe estamos trabajando en ello");
+        respMap.put(set01,"algo no funciona como debiera");
+        respMap.put(set02,"reinicie su equipo");
+        respMap.put(set03,"Su tarjeta de sonido ha quedado obsoleta, se recomienda cambiarla");
     }
 
     public String generateResponse (HashSet<String> word)
     {
         String response = null;
-        
-        Iterator<String> iterator = word.iterator();
-        boolean search = true;
-        
-        while (iterator.hasNext() && search)
-        {
-            response = respMap.get(iterator.next());
-            
-            if (response != null)
-            {
-                search = false;
-            }
+
+        response = respMap.get(word);
+
+        if (resp.size() > 0){
+            response = resp.remove(nAleatorio.nextInt(resp.size()));
         }
-        
-        if (response == null)
-        {
-            response = resp.get(nAleatorio.nextInt(resp.size()));
+        else{
+            response = "Lo siento, no entiendo la pregunta";
         }
-        
+
         return response;
     }
 
@@ -75,8 +77,17 @@ public class Responder
      * @return   A string that should be displayed as the response
      */
     public String pickDefaultResponse()
-    {
-        int num = nAleatorio.nextInt(6);
+    {   int num = nAleatorio.nextInt(6);
         return resp.get(num);
+    }
+    
+    private void DefaultResponses()
+    {
+       resp = new ArrayList<String>();
+       resp.add("Muy interesante");
+       resp.add("No lo entiendo");
+       resp.add("Alguna duda mas?");
+       resp.add("Lo siento, no puedo ayudarle");
+       resp.add("Buena idea");
     }
 }
