@@ -1,6 +1,9 @@
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.HashSet;
+
 /**
  * The responder class represents a response generator object.
  * It is used to generate an automatic response to an input string.
@@ -42,19 +45,22 @@ public class Responder
         respMap.put("Sonido","Su tarjeta de sonido ha quedado obsoleta, se recomienda cambiarla");
     }
 
-    /**
-     * Generate a response
-     */
-    public String generateResponse (String word){
-        String response = respMap.get(word);
-        if (response != null){
-            return response;
-        }
-        else {
-            return pickDefaultResponse();
-        }
-    }
+    public String generateResponse (HashSet<String> word)
+    {
+        String response = null;
         
+        Iterator<String> iterator = word.iterator();
+        String userInputString = iterator.next();
+        response = respMap.get(word);
+        
+        if (response == null)
+        {
+            response = resp.get(nAleatorio.nextInt(resp.size()));
+        }
+        
+        return response;
+    }
+
     /**
      * Displayed a response.
      * @return   A string that should be displayed as the response
