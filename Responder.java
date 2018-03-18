@@ -50,8 +50,17 @@ public class Responder
         String response = null;
         
         Iterator<String> iterator = word.iterator();
-        String userInputString = iterator.next();
-        response = respMap.get(word);
+        boolean search = true;
+        
+        while (iterator.hasNext() && search)
+        {
+            response = respMap.get(iterator.next());
+            
+            if (response != null)
+            {
+                search = false;
+            }
+        }
         
         if (response == null)
         {
